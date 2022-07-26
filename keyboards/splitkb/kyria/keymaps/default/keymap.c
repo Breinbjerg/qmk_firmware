@@ -26,6 +26,15 @@ enum layers {
 };
 
 
+// TODO: Change some of the keys on the keyboard. First look at the tap, esc, ctrl keys on the left board. 
+//       Add in encoder options so it's possible to navigate in the text with (Highly needed) 
+//       Look for more coder friendly layout for the Kyria. Atleast when it comes for the symbols used. 
+
+
+
+
+
+
 // Aliases for readability
 #define QWERTY   DF(_QWERTY)
 #define COLEMAK  DF(_COLEMAK_DH)

@@ -61,20 +61,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Base Layer: Default
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |  Esc   |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  Del   |
+ * |  Esc   |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  | BSpace |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |  Tab   |   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  |   ;  |   '    |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | LShift |   Z  |   X  |   C  |   V  |   B  | Lead | RAISE|  | LOWER|BSpace|   N  |   M  |   ,  |   .  |   /  | RShift |
+ * | LShift |   Z  |   X  |   C  |   V  |   B  | Lead | RAISE|  | LOWER|  DEL |   N  |   M  |   ,  |   .  |   /  | RShift |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        | MPlay| GUI  | LCtrl| Space| LALT |  | RCtrl| Enter| NAV  | RALT |Scroll|
  *                        |      |      |      |      |      |  |      |      |      |      | Lock |
  *                        `----------------------------------'  `----------------------------------'
  */
-    [_DEFAULT] = LAYOUT(
-      KC_ESC,  KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
+    [_DEFAULT] = LAYOUT(                                                                                                                
+      KC_ESC,  KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
       KC_TAB,  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                         KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-      KC_LSFT, KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,    KC_LEAD,  L_RAISE, L_LOWER, KC_BSPC, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
+      KC_LSFT, KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,    KC_LEAD,  L_RAISE, L_LOWER, KC_DEL, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
                                KC_MPLY,KC_LGUI,KC_LCTL, KC_SPACE, KC_LALT, KC_RCTL,  KC_ENT, L_NAV,   KC_RALT, KC_SLCK
     ),
 
@@ -274,15 +274,22 @@ static void render_qmk_logo(void) {
 // clang-format on
 static void render_static_info(void) {
     render_qmk_logo();
-    oled_write_P(PSTR("Kyria rev1.0\n"), false);
-    oled_write_P(PSTR("Keymap: plattfot v2\n"), false);
+#if defined(KEYBOARD_splitkb_kyria_rev1)
+    oled_write_P(PSTR("Kyria: rev1\n"), false);
+#elif defined(KEYBOARD_splitkb_kyria_rev2)
+    oled_write_P(PSTR("Kyria: rev2\n"), false);
+#endif
+    oled_write_P(PSTR("Keymap: Breinbjerg v2\n"), false);
 }
 
 static void render_status(void) {
     // QMK Logo and version information
     render_qmk_logo();
-    oled_write_P(PSTR("Kyria rev1.0\n"), false);
-    oled_write_P(PSTR("v" QMK_VERSION "\n"), false);
+#if defined(KEYBOARD_splitkb_kyria_rev1)
+    oled_write_P(PSTR("Kyria: rev1\n"), false);
+#elif defined(KEYBOARD_splitkb_kyria_rev2)
+    oled_write_P(PSTR("Kyria: rev2\n"), false);
+#endif
 
     // Host Keyboard Layer Status
     oled_write_P(PSTR("Layer: "), false);

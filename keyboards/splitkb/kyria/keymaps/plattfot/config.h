@@ -28,9 +28,10 @@
   #define RGBLIGHT_VAL_STEP 8
 #endif
 
-#define ENCODER_DIRECTION_FLIP
+// #define ENCODER_DEFAULT_POS 0x3
 // Fixing the skipping with the EC11K encoder
-#define ENCODER_RESOLUTION 2
+// Currently not working proberly. Need to find the right resolution for the encoder i've choosen.
+#define ENCODER_RESOLUTION 1 
 
 #define EE_HANDS
 
