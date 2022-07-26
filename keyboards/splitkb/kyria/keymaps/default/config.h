@@ -26,3 +26,13 @@
 
 // Lets you roll mod-tap keys
 #define IGNORE_MOD_TAP_INTERRUPT
+
+
+
+
+// Encoder reslution on 2 was annoying. Felt to sensitive. 
+#ifdef ENCODER_ENABLE
+#    define ENCODER_RESOLUTION 4
+#endif
+
+
