@@ -40,6 +40,8 @@
 #define LEADER_TIMEOUT 350
 
 #define IGNORE_MOD_TAP_INTERRUPT
+// Fix to avoid missing inputs when changeing directions. 
+#define ENCODER_DEFAULT_POS 0x3
 // Remove the delay for the OSL keys. Not using any other tap keys.
 // Otherwise TAPPING_TERM_PER_KEY would be the way to go.
 // #define TAPPING_TERM 0
