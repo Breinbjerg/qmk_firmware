@@ -368,60 +368,19 @@ void matrix_scan_user(void) {
         SEQ_ONE_KEY(KC_T) {  // Jump to workspace 5
             SEND_STRING(SS_LGUI("5"));
         }
-
-        // SEQ_ONE_KEY(KC_Y) {  // Jump to workspace 6
-        //     SEND_STRING(SS_LGUI("6"));
-        // }
-        // SEQ_ONE_KEY(KC_U) {  // Jump to workspace 7
-        //     SEND_STRING(SS_LGUI("7"));
-        // }
-        // SEQ_ONE_KEY(KC_I) {  // Jump to workspace 8
-        //     SEND_STRING(SS_LGUI("8"));
-        // }
-        // SEQ_ONE_KEY(KC_O) {  // Jump to workspace 9
-        //     SEND_STRING(SS_LGUI("9"));
-        // }
-        // SEQ_ONE_KEY(KC_P) {  // Jump to workspace 0
-        //     SEND_STRING(SS_LGUI("0"));
-        // }
-        // SEQ_ONE_KEY(KC_G) {  // View scratch pad
-        //     SEND_STRING(SS_LGUI("-"));
-        // }
-
-        // // Sway move window
-        // SEQ_TWO_KEYS(KC_M, KC_Q) {  // Move to workspace 1
-        //     SEND_STRING(SS_LSFT(SS_LGUI("1")));
-        // }
-        // SEQ_TWO_KEYS(KC_M, KC_W) {  // Move to workspace 2
-        //     SEND_STRING(SS_LSFT(SS_LGUI("2")));
-        // }
-        // SEQ_TWO_KEYS(KC_M, KC_E) {  // Move to workspace 3
-        //     SEND_STRING(SS_LSFT(SS_LGUI("3")));
-        // }
-        // SEQ_TWO_KEYS(KC_M, KC_R) {  // Move to workspace 4
-        //     SEND_STRING(SS_LSFT(SS_LGUI("4")));
-        // }
-        // SEQ_TWO_KEYS(KC_M, KC_T) {  // Move to workspace 5
-        //     SEND_STRING(SS_LSFT(SS_LGUI("5")));
-        // }
-
-        // SEQ_TWO_KEYS(KC_M, KC_Y) {  // Move to workspace 6
-        //     SEND_STRING(SS_LSFT(SS_LGUI("6")));
-        // }
-        // SEQ_TWO_KEYS(KC_M, KC_U) {  // Move to workspace 7
-        //     SEND_STRING(SS_LSFT(SS_LGUI("7")));
-        // }
-        // SEQ_TWO_KEYS(KC_M, KC_I) {  // Move to workspace 8
-        //     SEND_STRING(SS_LSFT(SS_LGUI("8")));
-        // }
-        // SEQ_TWO_KEYS(KC_M, KC_O) {  // Move to workspace 9
-        //     SEND_STRING(SS_LSFT(SS_LGUI("9")));
-        // }
-        // SEQ_TWO_KEYS(KC_M, KC_P) {  // Move to workspace 0
-        //     SEND_STRING(SS_LSFT(SS_LGUI("0")));
-        // }
-        // SEQ_TWO_KEYS(KC_M, KC_G) {  // Move to scratch pad
-        //     SEND_STRING(SS_LSFT(SS_LGUI("-")));
+        SEQ_ONE_KEY(KC_G) {  // View scratch pad
+            SEND_STRING(SS_LGUI("-"));
         }
     }
 }
+
+
+
+#if defined(ENCODER_MAP_ENABLE)
+const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
+    [_DEFAULT] =   { ENCODER_CCW_CW(KC_LEFT, KC_RIGHT), ENCODER_CCW_CW(KC_PGUP, KC_PGDN)  },
+    [_LOWER] =  { ENCODER_CCW_CW(KC_VOLD, KC_VOLU),           ENCODER_CCW_CW(RGB_SAD, RGB_SAI)  },
+    [_RAISE] =  { ENCODER_CCW_CW(RGB_VAD, RGB_VAI),           ENCODER_CCW_CW(C(KC_Z), C(KC_Y))  },
+    [_NAV] = { ENCODER_CCW_CW(KC_DOWN, KC_UP),          ENCODER_CCW_CW(KC_RIGHT, KC_LEFT) },
+};
+#endif
