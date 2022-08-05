@@ -48,14 +48,15 @@ enum layers {
 };
 
 #define MO_ADJT MO(_ADJUST)
-#define L_RAISE OSL(_RAISE)
-#define L_LOWER OSL(_LOWER)
+#define L_RAISE MO(_RAISE)
+#define L_LOWER MO(_LOWER)
 #define L_NAV   MO(_NAV)
 #define EU_TDOT RSA(KC_SLSH)
 #define EU_CDOT RALT(KC_EQUAL)
 #define EU_DEG  RALT(KC_SCLN)
 #define RSHIFT_ENT  MT(MOD_RSFT, KC_ENT)
 #define ALT_SPACE  MT(MOD_LALT, KC_SPACE)
+#define LOWER_ENT  LT(L_LOWER,KC_ENT)
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -77,7 +78,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_ESC,  KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_RCTL,
       KC_TAB,  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                         KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
       KC_LSFT, KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,    KC_LEAD,  KC_DEL, KC_RALT, KC_DEL, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, RSHIFT_ENT,
-                               KC_MPLY,KC_LGUI,KC_LCTL, ALT_SPACE, L_RAISE, KC_ENT,  KC_BSPC, L_NAV,   L_LOWER, KC_SLCK
+                               KC_MPLY,KC_LGUI,KC_LCTL, ALT_SPACE, L_RAISE, LOWER_ENT,  KC_BSPC, L_NAV,   L_LOWER, KC_SLCK
     ),
 
 /*
