@@ -196,7 +196,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     CLO_USED:
                     CLO_ACTIVE|CLO_PRESSED;
                 return false;
-            case KC_LEAD:
+            case QK_LEADER:
                 close_tap_it = CLO_DISABLED;
                 return true;
         }
@@ -348,7 +348,23 @@ bool oled_task_user(void) {
 #endif
 
 
-LEADER_EXTERNS();
+void leader_end_user(void) {
+    // Sway navigation
+    if (leader_sequence_one_key(KC_Q)) {  // Jump to workspace 1
+        SEND_STRING(SS_LGUI("1"));
+    }
+    if (leader_sequence_one_key(KC_W)) {  // Jump to workspace 2
+        SEND_STRING(SS_LGUI("2"));
+    }
+    if (leader_sequence_one_key(KC_E)) {  // Jump to workspace 3
+        SEND_STRING(SS_LGUI("3"));
+    }
+    if (leader_sequence_one_key(KC_R)) {  // Jump to workspace 4
+        SEND_STRING(SS_LGUI("4"));
+    }
+    if (leader_sequence_one_key(KC_T)) {  // Jump to workspace 5
+        SEND_STRING(SS_LGUI("5"));
+    }
 
 void matrix_scan_user(void) {
     LEADER_DICTIONARY() {
