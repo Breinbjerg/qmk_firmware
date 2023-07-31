@@ -46,9 +46,8 @@
 
 // The Leader key allows to flexibly assign macros to key sequences.
 #define LEADER_PER_KEY_TIMING
-#define LEADER_TIMEOUT 350
+#define LEADER_TIMEOUT 250
 
-#define IGNORE_MOD_TAP_INTERRUPT
 // Fix to avoid missing inputs when changeing directions. 
 #define ENCODER_DEFAULT_POS 0x3
 // Remove the delay for the OSL keys. Not using any other tap keys.
