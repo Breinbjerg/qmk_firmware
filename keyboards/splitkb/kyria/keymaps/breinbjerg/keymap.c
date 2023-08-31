@@ -48,34 +48,37 @@ enum layers {
 };
 
 #define MO_ADJT MO(_ADJUST)
-#define L_RAISE OSL(_RAISE)
-#define L_LOWER OSL(_LOWER)
+#define L_RAISE MO(_RAISE)
+#define L_LOWER MO(_LOWER)
 #define L_NAV   MO(_NAV)
 #define EU_TDOT RSA(KC_SLSH)
 #define EU_CDOT RALT(KC_EQUAL)
 #define EU_DEG  RALT(KC_SCLN)
+#define RSHIFT_ENT  MT(MOD_RSFT, KC_ENT)
+#define ALT_SPACE  MT(MOD_LALT, KC_SPACE)
+#define LOWER_ENT  LT(L_LOWER,KC_ENT)
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*
  * Base Layer: Default
  *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |  Esc   |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  Del   |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |  Tab   |   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  |   ;  |   '    |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | LShift |   Z  |   X  |   C  |   V  |   B  | Lead | RAISE|  | LOWER|BSpace|   N  |   M  |   ,  |   .  |   /  | RShift |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        | MPlay| GUI  | LCtrl| Space| LALT |  | RCtrl| Enter| NAV  | RALT |Scroll|
- *                        |      |      |      |      |      |  |      |      |      |      | Lock |
+ * ,-------------------------------------------.                              ,-----------------------------------------------'
+ * |  Esc   |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  RCtrl     |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+------------|
+ * |  Tab   |   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  |   ;  |   '        |
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+------------|
+ * | LShift |   Z  |   X  |   C  |   V  |   B  | Lead | DEL  |  | RALT |      |   N  |   M  |   ,  |   .  |   /  | RShift/ent |
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+--------------------------'
+ *                        | MPlay| GUI  | LCtrl| LALT |RAISE |  | Enter|BSpace| NAV  |LOWER |Scroll|
+ *                        |      |      |      | space|      |  |      |      |      |      | Lock |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_DEFAULT] = LAYOUT(
-      KC_ESC,  KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
+      KC_ESC,  KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_RCTL,
       KC_TAB,  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                         KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-      KC_LSFT, KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,    QK_LEAD,  L_RAISE, L_LOWER, KC_BSPC, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
-                               KC_MPLY,KC_LGUI,KC_LCTL, KC_SPACE, KC_LALT, KC_RCTL,  KC_ENT, L_NAV,   KC_RALT, KC_SCRL
+      KC_LSFT, KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,    QK_LEAD,  KC_DEL, KC_RALT, KC_DEL, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, RSHIFT_ENT,
+                               KC_MPLY,KC_LGUI,KC_LCTL, ALT_SPACE, L_RAISE, LOWER_ENT,  KC_BSPC, L_NAV,   L_LOWER, KC_SCRL
     ),
 
 /*
@@ -274,15 +277,22 @@ static void render_qmk_logo(void) {
 // clang-format on
 static void render_static_info(void) {
     render_qmk_logo();
-    oled_write_P(PSTR("Kyria rev1.0\n"), false);
-    oled_write_P(PSTR("Keymap: plattfot v2\n"), false);
+#if defined(KEYBOARD_splitkb_kyria_rev1)
+    oled_write_P(PSTR("Kyria: rev1\n"), false);
+#elif defined(KEYBOARD_splitkb_kyria_rev2)
+    oled_write_P(PSTR("Kyria: rev2\n"), false);
+#endif
+    oled_write_P(PSTR("Keymap: Breinbjerg v2\n"), false);
 }
 
 static void render_status(void) {
     // QMK Logo and version information
     render_qmk_logo();
-    oled_write_P(PSTR("Kyria rev1.0\n"), false);
-    oled_write_P(PSTR("v" QMK_VERSION "\n"), false);
+#if defined(KEYBOARD_splitkb_kyria_rev1)
+    oled_write_P(PSTR("Kyria: rev1\n"), false);
+#elif defined(KEYBOARD_splitkb_kyria_rev2)
+    oled_write_P(PSTR("Kyria: rev2\n"), false);
+#endif
 
     // Host Keyboard Layer Status
     oled_write_P(PSTR("Layer: "), false);
@@ -337,68 +347,6 @@ bool oled_task_user(void) {
 }
 #endif
 
-#ifdef ENCODER_ENABLE
-bool encoder_update_user(uint8_t index, bool clockwise) {
-    if (index == 0) {
-        switch (get_highest_layer(layer_state)) {
-            case _LOWER:
-                // Skip/Prev song
-                if (clockwise) {
-                    tap_code(KC_MNXT);
-                    clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
-                } else {
-                    tap_code(KC_MPRV);
-                    clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
-                }
-                break;
-            case _NAV:
-                // Brightness control
-                if (clockwise) {
-                    tap_code(KC_BRIU);
-                    clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
-                } else {
-                    tap_code(KC_BRID);
-                    clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
-                }
-                break;
-            default:
-                // Volume control
-                if (clockwise) {
-                    tap_code(KC_VOLU);
-                    clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
-                } else {
-                    tap_code(KC_VOLD);
-                    clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
-                }
-                break;
-        }
-    } else if (index == 1) {
-        switch (get_highest_layer(layer_state)) {
-            case _RAISE:
-                // Scroll through the workspaces
-                if (clockwise) {
-                    tap_code16(G(KC_GT));
-                    clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
-                } else {
-                    tap_code16(G(KC_LT));
-                    clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
-                }
-                break;
-            default:
-                // Scrolling
-                if (clockwise) {
-                    tap_code(KC_PGDN);
-                    clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
-                } else {
-                    tap_code(KC_PGUP);
-                    clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
-                }
-                break;
-        }
-    }
-    return true;
-}
-#endif
 
 void leader_end_user(void) {
     // Sway navigation
@@ -417,59 +365,15 @@ void leader_end_user(void) {
     if (leader_sequence_one_key(KC_T)) {  // Jump to workspace 5
         SEND_STRING(SS_LGUI("5"));
     }
-
-    if (leader_sequence_one_key(KC_Y)) {  // Jump to workspace 6
-        SEND_STRING(SS_LGUI("6"));
-    }
-    if (leader_sequence_one_key(KC_U)) {  // Jump to workspace 7
-        SEND_STRING(SS_LGUI("7"));
-    }
-    if (leader_sequence_one_key(KC_I)) {  // Jump to workspace 8
-        SEND_STRING(SS_LGUI("8"));
-    }
-    if (leader_sequence_one_key(KC_O)) {  // Jump to workspace 9
-        SEND_STRING(SS_LGUI("9"));
-    }
-    if (leader_sequence_one_key(KC_P)) {  // Jump to workspace 0
-        SEND_STRING(SS_LGUI("0"));
-    }
-    if (leader_sequence_one_key(KC_G)) {  // View scratch pad
-        SEND_STRING(SS_LGUI("-"));
-    }
-
-    // Sway move window
-    if (leader_sequence_two_keys(KC_M, KC_Q)) {  // Move to workspace 1
-        SEND_STRING(SS_LSFT(SS_LGUI("1")));
-    }
-    if (leader_sequence_two_keys(KC_M, KC_W)) {  // Move to workspace 2
-        SEND_STRING(SS_LSFT(SS_LGUI("2")));
-    }
-    if (leader_sequence_two_keys(KC_M, KC_E)) {  // Move to workspace 3
-        SEND_STRING(SS_LSFT(SS_LGUI("3")));
-    }
-    if (leader_sequence_two_keys(KC_M, KC_R)) {  // Move to workspace 4
-        SEND_STRING(SS_LSFT(SS_LGUI("4")));
-    }
-    if (leader_sequence_two_keys(KC_M, KC_T)) {  // Move to workspace 5
-        SEND_STRING(SS_LSFT(SS_LGUI("5")));
-    }
-
-    if (leader_sequence_two_keys(KC_M, KC_Y)) {  // Move to workspace 6
-        SEND_STRING(SS_LSFT(SS_LGUI("6")));
-    }
-    if (leader_sequence_two_keys(KC_M, KC_U)) {  // Move to workspace 7
-        SEND_STRING(SS_LSFT(SS_LGUI("7")));
-    }
-    if (leader_sequence_two_keys(KC_M, KC_I)) {  // Move to workspace 8
-        SEND_STRING(SS_LSFT(SS_LGUI("8")));
-    }
-    if (leader_sequence_two_keys(KC_M, KC_O)) {  // Move to workspace 9
-        SEND_STRING(SS_LSFT(SS_LGUI("9")));
-    }
-    if (leader_sequence_two_keys(KC_M, KC_P)) {  // Move to workspace 0
-        SEND_STRING(SS_LSFT(SS_LGUI("0")));
-    }
-    if (leader_sequence_two_keys(KC_M, KC_G)) {  // Move to scratch pad
-        SEND_STRING(SS_LSFT(SS_LGUI("-")));
-    }
 }
+
+
+#if defined(ENCODER_MAP_ENABLE)
+const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
+    [_DEFAULT] =   { ENCODER_CCW_CW(KC_LEFT, KC_RIGHT), ENCODER_CCW_CW(KC_PGUP, KC_PGDN)  },
+    [_LOWER] =  { ENCODER_CCW_CW(KC_VOLD, KC_VOLU),           ENCODER_CCW_CW(RGB_SAD, RGB_SAI)  },
+    [_RAISE] =  { ENCODER_CCW_CW(RGB_VAD, RGB_VAI),           ENCODER_CCW_CW(C(KC_Z), C(KC_Y))  },
+    [_NAV] = { ENCODER_CCW_CW(KC_UP, KC_DOWN),          ENCODER_CCW_CW(KC_RIGHT, KC_LEFT) },
+    [_ADJUST] = { ENCODER_CCW_CW(KC_LEFT, KC_RIGHT), ENCODER_CCW_CW(KC_PGUP, KC_PGDN)  },
+};
+#endif

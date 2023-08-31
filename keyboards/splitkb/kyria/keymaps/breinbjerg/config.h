@@ -17,9 +17,9 @@
 
 #pragma once
 
-#ifdef OLED_ENABLE
-  #define OLED_DISPLAY_128X64
-#endif
+// #ifdef OLED_ENABLE
+//   #define OLED_DISPLAY_128X64
+// #endif
 
 #ifdef RGBLIGHT_ENABLE
 #define RGBLIGHT_EFFECT_BREATHING
@@ -37,16 +37,20 @@
   #define RGBLIGHT_VAL_STEP 8
 #endif
 
-#define ENCODER_DIRECTION_FLIP
+// #define ENCODER_DEFAULT_POS 0x3
 // Fixing the skipping with the EC11K encoder
-#define ENCODER_RESOLUTION 2
+// Currently not working proberly. Need to find the right resolution for the encoder i've choosen.
+// #define ENCODER_RESOLUTION 1 
 
-#define EE_HANDS
+// #define EE_HANDS
 
 // The Leader key allows to flexibly assign macros to key sequences.
 #define LEADER_PER_KEY_TIMING
-#define LEADER_TIMEOUT 350
+#define LEADER_TIMEOUT 250
 
+// Fix to avoid missing inputs when changeing directions. 
+#define ENCODER_DEFAULT_POS 0x3
 // Remove the delay for the OSL keys. Not using any other tap keys.
 // Otherwise TAPPING_TERM_PER_KEY would be the way to go.
-#define TAPPING_TERM 0
+// #define TAPPING_TERM 0
+
