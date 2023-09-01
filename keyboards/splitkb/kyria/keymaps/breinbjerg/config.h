@@ -22,19 +22,19 @@
 // #endif
 
 #ifdef RGBLIGHT_ENABLE
-#define RGBLIGHT_EFFECT_BREATHING
-#define RGBLIGHT_EFFECT_RAINBOW_MOOD
-#define RGBLIGHT_EFFECT_RAINBOW_SWIRL
-#define RGBLIGHT_EFFECT_SNAKE
+// #define RGBLIGHT_EFFECT_BREATHING
+// #define RGBLIGHT_EFFECT_RAINBOW_MOOD
+// #define RGBLIGHT_EFFECT_RAINBOW_SWIRL
+// #define RGBLIGHT_EFFECT_SNAKE
 #define RGBLIGHT_EFFECT_KNIGHT
-#define RGBLIGHT_EFFECT_CHRISTMAS
-#define RGBLIGHT_EFFECT_STATIC_GRADIENT
-#define RGBLIGHT_EFFECT_RGB_TEST
-#define RGBLIGHT_EFFECT_ALTERNATING
-#define RGBLIGHT_EFFECT_TWINKLE
-  #define RGBLIGHT_HUE_STEP 8
-  #define RGBLIGHT_SAT_STEP 8
-  #define RGBLIGHT_VAL_STEP 8
+// #define RGBLIGHT_EFFECT_CHRISTMAS
+// #define RGBLIGHT_EFFECT_STATIC_GRADIENT
+// #define RGBLIGHT_EFFECT_RGB_TEST
+// #define RGBLIGHT_EFFECT_ALTERNATING
+// #define RGBLIGHT_EFFECT_TWINKLE
+  // #define RGBLIGHT_HUE_STEP 8
+  // #define RGBLIGHT_SAT_STEP 8
+  // #define RGBLIGHT_VAL_STEP 8
 #endif
 
 // #define ENCODER_DEFAULT_POS 0x3
@@ -53,4 +53,7 @@
 // Remove the delay for the OSL keys. Not using any other tap keys.
 // Otherwise TAPPING_TERM_PER_KEY would be the way to go.
 // #define TAPPING_TERM 0
+
+// Default is 200. Reducing Mod-Tap time before tap becomes hold. Main reason it to support faster typing since I'm using a MT key for switching layer. 
+#define TAPPING_TERM 100
 
