@@ -56,4 +56,4 @@
 
 // Default is 200. Reducing Mod-Tap time before tap becomes hold. Main reason it to support faster typing since I'm using a MT key for switching layer. 
 #define TAPPING_TERM 100
-
+#define TAPPING_TERM_PER_KEY

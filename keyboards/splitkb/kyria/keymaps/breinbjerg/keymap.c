@@ -299,3 +299,17 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
     [_ADJUST] = { ENCODER_CCW_CW(KC_LEFT, KC_RIGHT), ENCODER_CCW_CW(KC_PGUP, KC_PGDN)  },
 };
 #endif
+
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LOWER_ENT:
+            return TAPPING_TERM;
+
+        case ALT_SPACE:
+            return TAPPING_TERM + 100;
+
+        default:
+            return TAPPING_TERM;
+    }
+}
