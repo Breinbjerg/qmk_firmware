@@ -1,6 +1,5 @@
-# plattfot's keymap for [Kyria](https://github.com/splitkb/kyria)
+# Breinbjerg's keymap for [Kyria](https://github.com/splitkb/kyria)
 
-![Keyboard](https://i.imgur.com/mcefoHnh.jpg)
 
 Designed to be ease of use when programming, typing in both English
 and Swedish and navigating around in a tiling window manager, in my
@@ -28,6 +27,14 @@ to press NAV+j for `←`). It also removes the need for having specific
 macros for these as I had before.
 
 
+## Build and flash  
+```sh
+    qmk compile -kb kyria -km breinbjerg -e CONVERT_TO=elite_pi
+```
+- Elite-Pi has drag and drop bootloader. Find `uf2` and `.build`. 
+
+
+
 # Base Layer: Default
 ```
 //  ,-------------------------------------------.                              ,-------------------------------------------.
@@ -42,27 +49,8 @@ macros for these as I had before.
 //                         `----------------------------------'  `----------------------------------'
 ```
 
-Setup for using the
-[EurKey](https://eurkey.steffen.bruentjen.eu/layout.html) layout. As
-it's annoying to have to toggle us and swedish layout which shifts
-symbols around.
-
-AltGr is used to access the extra keys in the
-[EurKey](https://eurkey.steffen.bruentjen.eu/layout.html) layout.
 
 ## Notable features on this layer
-
-Left rotary encoder
-- Press: play/pause
-- Rotate: Volume control
-
-Right rotary encoder
-- Press: Scroll lock
-- Rotate: Page up/Page down. Used mouse scrolling at first. But
-          scrolling only works in the window where the mouse pointer
-          is. Which kind of defeated the purpose of having the scroll
-          on the keyboard, as I still needed to move my hand to the
-          mouse and then I could just use the scroll on the mouse.
 
 [Leader key](https://docs.qmk.fm/#/feature_leader_key) is mainly used
 for jumping between workspaces. Otherwise I would need to use both
