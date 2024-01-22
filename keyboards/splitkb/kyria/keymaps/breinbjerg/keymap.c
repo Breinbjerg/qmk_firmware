@@ -17,6 +17,7 @@
 #include "version.h"
 #include "stdio.h"
 
+// Layers for my keyboard. 
 enum layers {
     _DEFAULT,
     _LOWER,
@@ -24,6 +25,15 @@ enum layers {
     _NAV,
     _ADJUST,
 };
+
+// custom keycodes used for macros 
+enum custom_keycodes {
+    TILE_TOP,
+    TILE_DOWN,
+    TILE_LEFT,
+    TILE_RIGHT,
+};
+
 
 #define MO_ADJT MO(_ADJUST)
 #define L_RAISE MO(_RAISE)
@@ -105,9 +115,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Navigation Layer: Number/Function keys, navigation
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |      |      |      |      |      |                              |      |  7   |  8   |  9   |  0   |        |
+ * |        |      |      |  Top |      |      |                              |      |  7   |  8   |  9   |  0   |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |                              |      |  4   |  5   |  6   |      |        |
+ * |        |      | Left | Down | Right|      |                              |      |  4   |  5   |  6   |      |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * |        |      |      |      |      |      |      |      |  |      |      |      |  1   |  2   |  3   |      |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
@@ -117,10 +127,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
     [_NAV] = LAYOUT(
-      _______, _______, _______, _______, _______, _______,                                     _______, KC_7,    KC_8,    KC_9,    KC_0, _______,
-      _______, _______, _______, _______, _______, _______,                                     _______, KC_4,    KC_5,    KC_6, _______, _______,
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_1,    KC_2,    KC_3, _______, _______,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+      _______, _______,   _______, TILE_TOP ,    _______, _______,                                     _______, KC_7,    KC_8,    KC_9,    KC_0, _______,
+      _______, _______, TILE_LEFT, TILE_DOWN, TILE_RIGHT, _______,                                     _______, KC_4,    KC_5,    KC_6, _______, _______,
+      _______, _______,   _______,   _______,    _______, _______, _______, _______, _______, _______, _______, KC_1,    KC_2,    KC_3, _______, _______,
+                                     _______,    _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
 //  Old layout saved just in case I get annoyed and want to go back again. 
@@ -321,4 +331,38 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         default:
             return TAPPING_TERM;
     }
+}
+
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record)
+{
+    switch (keycode)
+    {
+    case TILE_TOP:
+        // Only do if key is pressed
+        if (record->event.pressed){
+        SEND_STRING(SS_RGUI(SS_LSFT("t"))); 
+        }
+        break;
+    case TILE_DOWN:
+        if (record->event.pressed){
+        SEND_STRING(SS_RGUI(SS_LSFT("d")));
+        }
+        break;
+    case TILE_RIGHT:
+        if (record->event.pressed){
+        SEND_STRING(SS_RGUI(SS_LSFT("r")));
+        }
+        break;
+    case TILE_LEFT:
+        if (record->event.pressed){
+        SEND_STRING(SS_RGUI(SS_LSFT("l")));
+        }
+        break;
+    
+    default:
+        break;
+    }
+
+    return true;
 }
