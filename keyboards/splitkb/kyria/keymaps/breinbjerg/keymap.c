@@ -28,10 +28,11 @@ enum layers {
 
 // custom keycodes used for macros 
 enum custom_keycodes {
-    TILE_TOP,
+    TILE_TOP = SAFE_RANGE,
     TILE_DOWN,
     TILE_LEFT,
     TILE_RIGHT,
+    MOVE_SCREEN,
 };
 
 
@@ -115,7 +116,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Navigation Layer: Number/Function keys, navigation
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |      |      |  Top |      |      |                              |      |  7   |  8   |  9   |  0   |        |
+ * |        |      |      |  Top | Move |      |                              |      |  7   |  8   |  9   |  0   |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        |      | Left | Down | Right|      |                              |      |  4   |  5   |  6   |      |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
@@ -127,7 +128,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
     [_NAV] = LAYOUT(
-      _______, _______,   _______, TILE_TOP ,    _______, _______,                                     _______, KC_7,    KC_8,    KC_9,    KC_0, _______,
+      _______, _______,   _______, TILE_TOP , MOVE_SCREEN, _______,                                     _______, KC_7,    KC_8,    KC_9,    KC_0, _______,
       _______, _______, TILE_LEFT, TILE_DOWN, TILE_RIGHT, _______,                                     _______, KC_4,    KC_5,    KC_6, _______, _______,
       _______, _______,   _______,   _______,    _______, _______, _______, _______, _______, _______, _______, KC_1,    KC_2,    KC_3, _______, _______,
                                      _______,    _______, _______, _______, _______, _______, _______, _______, _______, _______
@@ -341,25 +342,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     case TILE_TOP:
         // Only do if key is pressed
         if (record->event.pressed){
-        SEND_STRING(SS_RGUI(SS_LSFT("t"))); 
+            SEND_STRING(SS_LSFT(SS_LALT(SS_RCTL("f")))); 
         }
         break;
     case TILE_DOWN:
         if (record->event.pressed){
-        SEND_STRING(SS_RGUI(SS_LSFT("d")));
+            SEND_STRING(SS_LSFT(SS_LALT(SS_RCTL("e"))));
         }
         break;
     case TILE_RIGHT:
         if (record->event.pressed){
-        SEND_STRING(SS_RGUI(SS_LSFT("r")));
+            SEND_STRING(SS_LSFT(SS_LALT(SS_RCTL("b"))));
         }
         break;
     case TILE_LEFT:
         if (record->event.pressed){
-        SEND_STRING(SS_RGUI(SS_LSFT("l")));
+            SEND_STRING(SS_LSFT(SS_LALT(SS_RCTL("k"))));
         }
         break;
-    
+    case MOVE_SCREEN:
+        if (record->event.pressed)
+        {
+            SEND_STRING(SS_LSFT(SS_LALT(SS_RCTL("o"))));
+        } 
+        break;
+
     default:
         break;
     }
