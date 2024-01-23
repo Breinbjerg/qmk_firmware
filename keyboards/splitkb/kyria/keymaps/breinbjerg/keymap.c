@@ -32,7 +32,10 @@ enum custom_keycodes {
     TILE_DOWN,
     TILE_LEFT,
     TILE_RIGHT,
-    MOVE_SCREEN,
+    MOVE_SCREEN_LEFT,
+    MOVE_SCREEN_RIGHT,
+    MOVE_WS_LEFT,
+    MOVE_WS_RIGHT,
 };
 
 
@@ -113,12 +116,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     ),
 /*
- * Navigation Layer: Number/Function keys, navigation
+ * Navigation Layer: Number and Window navigation
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |      |      |  Top | Move |      |                              |      |  7   |  8   |  9   |  0   |        |
+ * |        |      | MovR |  Top | MovL |      |                              |      |  7   |  8   |  9   |  0   |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |      | Left | Down | Right|      |                              |      |  4   |  5   |  6   |      |        |
+ * |        |  WsL | Left | Down | Right|  WsR |                              |      |  4   |  5   |  6   |      |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * |        |      |      |      |      |      |      |      |  |      |      |      |  1   |  2   |  3   |      |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
@@ -128,8 +131,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
     [_NAV] = LAYOUT(
-      _______, _______,   _______, TILE_TOP , MOVE_SCREEN, _______,                                     _______, KC_7,    KC_8,    KC_9,    KC_0, _______,
-      _______, _______, TILE_LEFT, TILE_DOWN, TILE_RIGHT, _______,                                     _______, KC_4,    KC_5,    KC_6, _______, _______,
+      _______, _______, MOVE_SCREEN_RIGHT, TILE_TOP , MOVE_SCREEN_LEFT, _______,                                     _______, KC_7,    KC_8,    KC_9,    KC_0, _______,
+      _______, MOVE_WS_LEFT, TILE_LEFT, TILE_DOWN, TILE_RIGHT, MOVE_WS_RIGHT,                                     _______, KC_4,    KC_5,    KC_6, _______, _______,
       _______, _______,   _______,   _______,    _______, _______, _______, _______, _______, _______, _______, KC_1,    KC_2,    KC_3, _______, _______,
                                      _______,    _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
@@ -360,13 +363,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
             SEND_STRING(SS_LSFT(SS_LALT(SS_RCTL("k"))));
         }
         break;
-    case MOVE_SCREEN:
+    case MOVE_SCREEN_LEFT:
         if (record->event.pressed)
         {
             SEND_STRING(SS_LSFT(SS_LALT(SS_RCTL("o"))));
-        } 
+        }
         break;
-
+    case MOVE_SCREEN_RIGHT:
+        if (record->event.pressed)
+        {
+            SEND_STRING(SS_LSFT(SS_LALT(SS_RCTL("a"))));
+        }
+        break;    
+    case MOVE_WS_LEFT:
+        if (record->event.pressed)
+        {
+            SEND_STRING(SS_LSFT(SS_LALT(SS_RCTL("g"))));
+        }
+        break;
+    case MOVE_WS_RIGHT:
+        if (record->event.pressed)
+        {
+            SEND_STRING(SS_LSFT(SS_LALT(SS_RCTL("h"))));
+        }
+        break;    
+        
     default:
         break;
     }
